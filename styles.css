@@ -1,0 +1,68 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+
+:root{
+    --Green-400: hsl(172, 67%, 45%);
+    --Green-900: hsl(183, 100%, 15%);
+    --Grey-500: hsl(186, 14%, 43%);
+    --Grey-400: hsl(184, 14%, 56%);
+    --Grey-200: hsl(185, 41%, 84%);
+    --Grey-50:  hsl(189, 47%, 97%);
+    --White:    hsl(0, 100%, 100%);
+
+    /* font size */
+    --fs-med: 1rem;
+    --fs-reg: 1.5rem;
+    --fs-lar: 2rem;
+    --fs-xl: 4rem;
+}
+
+@layer reset{
+    *,
+    *::after,
+    *::before{
+        box-sizing: border-box;
+        margin: 0;
+    }
+
+    input,
+    button{
+        all: unset; /* reset almost all the properties*/
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    h1,
+    h2,
+    h3{
+        margin: 0;
+        display: block;
+    }
+}
+
+@layer base{
+    html{
+        font-family: "Space Mono", sans-serif;
+    }
+
+    body{
+        background-color: var(--Grey-200);
+        font-size: var(--fs-reg);
+        color: var(--Green-900);
+        display: flex;
+        justify-content: center;
+    }
+
+    .tip-calculator-card{
+        background-color: var(--White);
+    }
+
+    input:focus,
+    button:focus{
+        outline: 2px solid var(--Green-400);
+    }
+
+    input::placeholder{
+        text-align: right;
+    }
+
+}
