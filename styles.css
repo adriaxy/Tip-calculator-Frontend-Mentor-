@@ -6,14 +6,27 @@
     --Grey-500: hsl(186, 14%, 43%);
     --Grey-400: hsl(184, 14%, 56%);
     --Grey-200: hsl(185, 41%, 84%);
-    --Grey-50:  hsl(189, 47%, 97%);
+    --Grey-50:  hsl(189, 26%, 95%);
     --White:    hsl(0, 100%, 100%);
 
     /* font size */
+    --fs-sm: 0.8rem;
     --fs-med: 1rem;
     --fs-reg: 1.5rem;
-    --fs-lar: 2rem;
-    --fs-xl: 4rem;
+    --fs-lar: 1.8rem;
+    --fs-xl: 3rem;
+
+    /* font weight */
+    --fw-400: 300;
+    --fw-500: 500;
+    --fw-600: 600;
+
+    /* border radius */
+    --border-r-20: 20px;
+
+    /* grid cards sizes */
+    --width-card: 380px;
+    --height-card: 380px;
 }
 
 @layer reset{
@@ -28,7 +41,15 @@
     button{
         all: unset; /* reset almost all the properties*/
         cursor: pointer;
-        padding: 5px;
+    }
+
+    input{
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    button{
+        width: 100%;
     }
 
     h1,
@@ -37,6 +58,17 @@
         margin: 0;
         display: block;
     }
+
+    span{
+        display: block;
+    }
+
+    /* Quitar flechas en Chrome, Safari, Edge */
+    input[type=number]::-webkit-outer-spin-button,
+    input[type=number]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
 }
 
 @layer base{
@@ -44,25 +76,247 @@
         font-family: "Space Mono", sans-serif;
     }
 
+    h1,
+    h2,
+    h3{
+        font-weight: var(--fw-200);
+    }
+
     body{
         background-color: var(--Grey-200);
         font-size: var(--fs-reg);
+        font-weight: var(--fw-200);
         color: var(--Green-900);
-        display: flex;
-        justify-content: center;
     }
 
     .tip-calculator-card{
         background-color: var(--White);
     }
 
-    input:focus,
-    button:focus{
-        outline: 2px solid var(--Green-400);
+    .calculator-output{
+        background-color: var(--Green-900);
+        padding: 30px;
+    }
+
+    input,
+    button{
+        font-size: var(--fs-reg);
+        border-radius: 5px;
+    }
+
+    label,
+    h2,
+    h3,
+    .attribution{
+        font-size: var(--fs-med);
+    }
+
+    label{
+        cursor: text;
+    }
+
+    h3{
+        color: var(--White);
+    }
+
+    .tip-amount-result,
+    .total-person-result{
+        font-size: var(--fs-xl);
+        color: var(--Green-400);
+        font-weight: var(--fw-600);
+    }
+
+    h3>span{
+        color: var(--Grey-400);
+        font-size: var(--fs-sm);
+    }
+
+    button{
+        color: var(--Grey-900);
+        background-color: var(--Grey-500);
+        font-weight: var(--fw-600);
+        text-align: center;
+        height: 3rem;
+        transition: background-color 0.1s ease, color 0.1s ease;
+    }
+
+    .calculator-input button{
+        color: var(--White);
+        background-color: var(--Green-900);
+    }
+
+    button:hover{
+        background-color: var(--Green-400);
+        color: var(--Green-900);
+    }
+
+    input:focus{
+    outline: none;
+    box-shadow: 0 0 0 2px var(--Green-400);
+    }
+
+    input:focus::placeholder{
+        color: transparent;
+    }
+
+    input{
+        text-align: right;
+        font-weight: var(--fw-600);
+        cursor: text;
+        caret-color: var(--Green-400);
+        padding: 5px 12px 5px 0px;
+        background-color: var(--Grey-50);
     }
 
     input::placeholder{
         text-align: right;
+    }
+}
+
+@layer layout{
+    body{
+        display: flex;
+        justify-content: center;
+        height: 100vh;
+    }
+
+    .container{
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }
+
+    main{
+        display: flex;
+        flex-direction: column;
+        gap: 60px;
+        flex-grow: 5;
+        margin-top: 8rem;
+    }
+
+    .tip-calculator-card{
+        height: 27rem;
+        background-color: var(--White);
+        border-radius: var(--border-r-20);
+    }
+
+    form{
+        padding: 30px;
+        display: grid;
+        grid-template-columns: repeat(2, var(--width-card));
+        gap: 40px;
+        height: 100%;
+    }
+
+    .calculator-input{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        gap: 30px;
+    }
+
+    .calculator-output{
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 15px;
+    }
+
+    .input-regular label,
+    h2{
+        display: block;
+        margin-bottom: 4px;
+    }
+
+    .output-block{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .output-totals {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    h1{
+        display: flex;
+        justify-content: center;
+    }
+
+    .attribution{
+        display: flex;
+        justify-content: center;
+        flex-grow: 2;
+    }
+
+    .sr-only {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        padding: 0;
+        margin: -1px;
+        overflow: hidden;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+        border: 0;
+    }
+
+    .custom-button input{
+        width: 100%;
+        box-sizing: border-box; /* nos aseguramos que el padding y el borde estan incluidos dentro del 100% del ancho del contenedor */
+        height: 3rem;
+    }
+
+    .tip-buttons{
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-template-rows: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .input-wrapper{
+        position: relative;
+    }
+    
+    .icon-input{
+        position: absolute;
+        top: 30%;
+        left: 4%;
+    }
+
+    @media(max-width: 860px){
+        .tip-calculator-card{
+            height: auto;
+        }
+
+        form{
+            display: flex;
+            flex-direction: column;
+        }
+        
+        main{
+            margin-top: 4rem;
+        }
+
+        .calculator-input{
+            justify-content: flex-start;
+        }
+
+        .custom-button input::placeholder{
+            text-align: center;
+         }
+
+        .calculator-output{
+            justify-content: flex-start;
+            gap: 40px;
+            height: auto;
+        }
+
+         .output-block{
+            gap: 5px;
+         }
     }
 
 }
