@@ -120,7 +120,7 @@
     }
 
     .tip-amount-result,
-    .total-person-result{
+    .tip-amount-total{
         font-size: var(--fs-xl);
         color: var(--Green-400);
         font-weight: var(--fw-600);
@@ -138,6 +138,11 @@
         text-align: center;
         height: 3rem;
         transition: background-color 0.1s ease, color 0.1s ease;
+    }
+
+    .active-button{
+        background-color: var(--Green-400);
+        color: var(--Grey-900);
     }
 
     .calculator-input button{
