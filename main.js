@@ -67,10 +67,16 @@ function tipValidator(callback){ //pasamos una función callback como parámetro
 
     // El evento input se dispara cada vez que hay algún cambio dentro de un input
     inputCustom.addEventListener("input", (e) =>{
-        let customValue = parseFloat(e.target.value);
+        let customValue = parseInt(e.target.value);
+        let finalCustomValue;
         const source = 'custom';
-        if(!isNaN(customValue) && customValue > 0){
-            callback(customValue, source)
+        let validated = validatorValue(customValue);
+        if(validated !== null){
+            finalCustomValue = limitNumbers(3, customValue);
+            e.target.value = finalCustomValue;
+        } 
+        if(!isNaN(finalCustomValue) && finalCustomValue > 0){
+            callback(finalCustomValue, source)
         }
     })
 }
