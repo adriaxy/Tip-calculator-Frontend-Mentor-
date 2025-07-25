@@ -140,14 +140,14 @@
         transition: background-color 0.1s ease, color 0.1s ease;
     }
 
-    .active-button{
-        background-color: var(--Green-400);
-        color: var(--Grey-900);
-    }
-
     .calculator-input button{
         color: var(--White);
         background-color: var(--Green-900);
+    }
+
+    .calculator-input .active-button{
+        background-color: var(--Green-400);
+        color: var(--Grey-900);
     }
 
     button:hover{

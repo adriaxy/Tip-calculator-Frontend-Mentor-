@@ -3,7 +3,7 @@
 const calculatorCard = document.querySelector('.tip-calculator-card');
 const inputBill = document.getElementById('bill');
 const inputPeople = document.getElementById('people');
-    const inputCustom = document.getElementById('custom');
+const inputCustom = document.getElementById('custom');
 
 const tipAmount = document.querySelector('.tip-amount-result');
 const tipTotal = document.querySelector('.tip-amount-total');
@@ -45,11 +45,18 @@ function tipValidator(callback){ //pasamos una función callback como parámetro
 
     const inputCustom = document.getElementById('custom');
     const tipButton = document.querySelector('.tip-buttons')
+    const allButtons = document.querySelectorAll('.tipButton')
 
     tipButton.addEventListener("click", (e)=>{
+        allButtons.forEach((button) => {button.classList.remove('active-button')})
+        const selectedButton = e.target;
+        selectedButton.classList.remove("active-button")
+
         if(e.target.tagName === 'BUTTON'){
+            selectedButton.classList.add("active-button")
             const buttonValue = parseFloat(e.target.value);
             const source = 'button' //identificamos en qué elemento se ha hecho clic
+
             if(!isNaN(buttonValue)){
                 callback(buttonValue, source);
             } 
