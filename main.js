@@ -1,9 +1,8 @@
 
-
+const form = document.querySelector('form');
 const calculatorCard = document.querySelector('.tip-calculator-card');
 const inputBill = document.getElementById('bill');
 const inputPeople = document.getElementById('people');
-const inputCustom = document.getElementById('custom');
 
 const tipAmount = document.querySelector('.tip-amount-result');
 const tipTotal = document.querySelector('.tip-amount-total');
@@ -13,6 +12,10 @@ const initialTextOutput = "$0.00"
 let inputTipValue = null;
 let inputBillValue = null;
 let inputPeopleValue = null;
+
+const inputCustom = document.getElementById('custom');
+const tipButton = document.querySelector('.tip-buttons')
+const allButtons = document.querySelectorAll('.tipButton')
 
 
 function limitNumbers(limit, number){
@@ -43,10 +46,6 @@ inputPeople.addEventListener("input", (e) => handleInput(e, val => inputPeopleVa
 //Validamos y devolvemos el valor al hacer clic en una de las opciones de "select tip"
 function tipValidator(callback){ //pasamos una función callback como parámetro
 
-    const inputCustom = document.getElementById('custom');
-    const tipButton = document.querySelector('.tip-buttons')
-    const allButtons = document.querySelectorAll('.tipButton')
-
     tipButton.addEventListener("click", (e)=>{
         allButtons.forEach((button) => {button.classList.remove('active-button')})
         const selectedButton = e.target;
@@ -73,8 +72,16 @@ function tipValidator(callback){ //pasamos una función callback como parámetro
         if(!isNaN(customValue) && customValue > 0){
             callback(customValue, source)
         }
-    })    
+    })
 }
+
+inputCustom.addEventListener("click", (e)=>{
+    if(e.target.value.trim() === ""){
+        inputTipValue = null;
+        tipAmount.textContent = initialTextOutput
+        tipTotal.textContent = initialTextOutput
+    }
+})
 
 tipValidator((value, source) => {
     inputTipValue = value / 100;
@@ -82,6 +89,7 @@ tipValidator((value, source) => {
     if(source === 'button'){
         inputCustom.value = "";
     }
+    
 })
 
 function calculateTipAmount(bill, tip, people){
@@ -116,6 +124,14 @@ function inputValidator(){
     calculatorCard.addEventListener(eventType, inputValidator) //handleChange es una función que crearemos (no es una keyword)
 });
 
+form.addEventListener('reset', () => {
+    inputTipValue = null;
+    inputBillValue = null;
+    inputPeopleValue = null;
+    allButtons.forEach((button) => button.classList.remove("active-button"))
+    tipAmount.textContent = initialTextOutput
+    tipTotal.textContent = initialTextOutput
+})
 
 // calculatorCard.addEventListener("click", (e)=>{
 //     let element = e.target.tagName;

@@ -148,6 +148,12 @@
     .calculator-input .active-button{
         background-color: var(--Green-400);
         color: var(--Grey-900);
+        box-sizing: border-box;
+        outline: none;
+    }
+
+    button:focus-visible{
+        outline: 3px solid var(--Green-400);
     }
 
     button:hover{
