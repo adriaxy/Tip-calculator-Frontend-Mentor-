@@ -3,7 +3,8 @@ import {
     limitNumbers,
     validatorValue,
     calculateTipAmount,
-    calculateTotal
+    calculateTotal,
+    limitNumbersCustom
 } from './logic.js';
 
 const form = document.querySelector('form');
@@ -24,14 +25,12 @@ const inputCustom = document.getElementById('custom');
 const tipButton = document.querySelector('.tip-buttons')
 const allButtons = document.querySelectorAll('.tipButton')
 
-
-
 function handleInput(e, setValueCallback){
     let value = parseFloat(e.target.value);
     let validated = validatorValue(value);
 
     if(validated !== null){
-        let limited = limitNumbers(3, validated);
+        let limited = limitNumbers(4, validated);
         setValueCallback(limited);
         e.target.value = limited;
     } else {
@@ -72,7 +71,7 @@ function tipValidator(callback){ //pasamos una función callback como parámetro
         const source = 'custom';
         let validated = validatorValue(customValue);
         if(validated !== null){
-            finalCustomValue = limitNumbers(3, customValue);
+            finalCustomValue = limitNumbersCustom(3, customValue);
             e.target.value = finalCustomValue;
         } 
         if(!isNaN(finalCustomValue) && finalCustomValue > 0){

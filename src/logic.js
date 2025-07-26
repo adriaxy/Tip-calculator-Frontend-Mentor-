@@ -1,7 +1,14 @@
 
 
 export function limitNumbers(limit, number){
-    return parseInt(number.toString().slice(0,limit))
+    return parseFloat(number.toString().slice(0,limit))
+}
+
+export function limitNumbersCustom(limit, number){
+    if(number.length === 2 && number){
+        return console.log('no permito decimal')
+    }
+        return parseInt(number.toString().slice(0,limit))
 }
 
 export function validatorValue(value){
