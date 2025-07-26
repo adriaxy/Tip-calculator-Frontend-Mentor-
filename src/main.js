@@ -1,4 +1,11 @@
 
+import {
+    limitNumbers,
+    validatorValue,
+    calculateTipAmount,
+    calculateTotal
+} from './logic.js';
+
 const form = document.querySelector('form');
 const calculatorCard = document.querySelector('.tip-calculator-card');
 const inputBill = document.getElementById('bill');
@@ -18,13 +25,6 @@ const tipButton = document.querySelector('.tip-buttons')
 const allButtons = document.querySelectorAll('.tipButton')
 
 
-function limitNumbers(limit, number){
-    return parseInt(number.toString().slice(0,limit))
-}
-
-function validatorValue(value){
-    return (!isNaN(value) && value > 0) ? value : null;
-}
 
 function handleInput(e, setValueCallback){
     let value = parseFloat(e.target.value);
@@ -98,25 +98,12 @@ tipValidator((value, source) => {
     
 })
 
-function calculateTipAmount(bill, tip, people){
-    return `$${parseFloat((bill*tip/people).toFixed(2))}`
-}
-
-function calculateTotal(bill, tip, people){
-    let totalTip = bill * tip;
-    let totalBill = totalTip + bill
-    return `$${parseFloat((totalBill/people).toFixed(2))}`
-}
-
-
 function inputValidator(){
     if(typeof inputTipValue === "number" &&
   typeof inputBillValue === "number" &&
   typeof inputPeopleValue === "number"){
-        // console.log(`Tres imputs con valor: bill(${inputBillValue}), tip(${inputTipValue}), people(${inputPeopleValue})`)
         tipAmount.textContent = calculateTipAmount(inputBillValue, inputTipValue, inputPeopleValue)
         tipTotal.textContent = calculateTotal(inputBillValue, inputTipValue, inputPeopleValue)
-        // console.log(`Tres imputs con valor: bill(${typeof inputBillValue}), tip(${typeof inputTipValue}), people(${typeof inputPeopleValue})`)
     } else {
         tipAmount.textContent = initialTextOutput
         tipTotal.textContent = initialTextOutput
@@ -139,8 +126,3 @@ form.addEventListener('reset', () => {
     tipTotal.textContent = initialTextOutput
 })
 
-// calculatorCard.addEventListener("click", (e)=>{
-//     let element = e.target.tagName;
-//     console.log(inputTipValue)
-//     element !== "BUTTON" && element !== "INPUT"? console.log('no') : inputValidator();
-// })
