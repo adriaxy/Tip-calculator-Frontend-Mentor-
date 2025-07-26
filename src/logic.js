@@ -4,10 +4,7 @@ export function limitNumbers(limit, number){
     return parseFloat(number.toString().slice(0,limit))
 }
 
-export function limitNumbersCustom(limit, number){
-    if(number.length === 2 && number){
-        return console.log('no permito decimal')
-    }
+export function limitNumbersToInteger(limit, number){
         return parseInt(number.toString().slice(0,limit))
 }
 

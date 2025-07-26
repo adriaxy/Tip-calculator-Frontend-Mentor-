@@ -4,7 +4,7 @@ import {
     validatorValue,
     calculateTipAmount,
     calculateTotal,
-    limitNumbersCustom
+    limitNumbersToInteger,
 } from './logic.js';
 
 const form = document.querySelector('form');
@@ -25,12 +25,29 @@ const inputCustom = document.getElementById('custom');
 const tipButton = document.querySelector('.tip-buttons')
 const allButtons = document.querySelectorAll('.tipButton')
 
-function handleInput(e, setValueCallback){
+const inputs = [inputBill, inputPeople, inputCustom];
+
+inputs.forEach(input => {
+    input.addEventListener('keydown', (e)=>{
+        if(e.key === '-' || e.key === 'e' || e.key === '+' || e.key === ','){
+            e.preventDefault();
+        }
+
+        if(input === inputPeople || input === inputCustom){
+            if(e.key === '.'){
+                console.log('clic en .')
+                e.preventDefault();
+            }
+        }
+    })         
+})
+
+function handleInput(e, setValueCallback, limitFunc, maxDigits){
     let value = parseFloat(e.target.value);
     let validated = validatorValue(value);
 
     if(validated !== null){
-        let limited = limitNumbers(4, validated);
+        let limited = limitFunc(maxDigits, validated);
         setValueCallback(limited);
         e.target.value = limited;
     } else {
@@ -38,8 +55,8 @@ function handleInput(e, setValueCallback){
     }
 }
 
-inputBill.addEventListener("input", (e) => handleInput(e, val => inputBillValue = val));
-inputPeople.addEventListener("input", (e) => handleInput(e, val => inputPeopleValue = val));
+inputBill.addEventListener("input", (e) => handleInput(e, val => inputBillValue = val, limitNumbers, 6));
+inputPeople.addEventListener("input", (e) => handleInput(e, val => inputPeopleValue = val, limitNumbersToInteger, 4));
 
 
 //Validamos y devolvemos el valor al hacer clic en una de las opciones de "select tip"
@@ -71,7 +88,7 @@ function tipValidator(callback){ //pasamos una función callback como parámetro
         const source = 'custom';
         let validated = validatorValue(customValue);
         if(validated !== null){
-            finalCustomValue = limitNumbersCustom(3, customValue);
+            finalCustomValue = limitNumbersToInteger(2, customValue);
             e.target.value = finalCustomValue;
         } 
         if(!isNaN(finalCustomValue) && finalCustomValue > 0){
@@ -80,11 +97,15 @@ function tipValidator(callback){ //pasamos una función callback como parámetro
     })
 }
 
+function resetTipDisplay(){
+    tipAmount.textContent = initialTextOutput
+    tipTotal.textContent = initialTextOutput
+}
+
 inputCustom.addEventListener("click", (e)=>{
     if(e.target.value.trim() === ""){
         inputTipValue = null;
-        tipAmount.textContent = initialTextOutput
-        tipTotal.textContent = initialTextOutput
+        resetTipDisplay();
     }
 })
 
@@ -104,11 +125,10 @@ function inputValidator(){
         tipAmount.textContent = calculateTipAmount(inputBillValue, inputTipValue, inputPeopleValue)
         tipTotal.textContent = calculateTotal(inputBillValue, inputTipValue, inputPeopleValue)
     } else {
-        tipAmount.textContent = initialTextOutput
-        tipTotal.textContent = initialTextOutput
-        // console.log(`valor de tip: ${typeof inputTipValue}`);
-        // console.log(`valor de bill: ${typeof inputBillValue}`);
-        // console.log(`valor de People: ${typeof inputPeopleValue}`);
+        resetTipDisplay();
+        //  console.log(`valor de tip: ${typeof inputTipValue}`);
+        //  console.log(`valor de bill: ${typeof inputBillValue}`);
+        //  console.log(`valor de People: ${typeof inputPeopleValue}`);
     }
 }
 
@@ -121,7 +141,5 @@ form.addEventListener('reset', () => {
     inputBillValue = null;
     inputPeopleValue = null;
     allButtons.forEach((button) => button.classList.remove("active-button"))
-    tipAmount.textContent = initialTextOutput
-    tipTotal.textContent = initialTextOutput
+    resetTipDisplay();
 })
-
