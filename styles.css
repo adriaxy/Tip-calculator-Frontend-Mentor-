@@ -33,6 +33,11 @@
     --active-input: 5px 12px 5px 0px;
 }
 
+.dark-theme {
+    --Green-400: hsl(312, 100%, 51%);
+    --Green-900: hsl(188, 40%, 4%);
+}
+
 @layer reset{
     *,
     *::after,
@@ -50,10 +55,6 @@
     input{
         width: 100%;
         box-sizing: border-box;
-    }
-
-    button{
-        width: 100%;
     }
 
     h1,
@@ -204,6 +205,32 @@
         flex-direction: column;
         height: 100vh;
     }
+
+    .mode-color{
+        margin-top: 20px;
+        font-size: var(--fs-med);
+    }
+
+    .mode-color-buttons{
+        display: flex;
+        flex-direction: row;
+        justify-content: end;
+        gap: 10px;
+    }
+
+    button.light, button.dark {
+        align-items: center;
+        justify-content: center;
+        width: 30px;  /* o el tamaño que quieras */
+        height: 30px;
+        padding: 2px; /* opcional */
+        background-color: var(--White);
+    }
+
+    .mode-color-buttons button:hover{
+        background-color: var(--Green-400);
+    }
+
 
     main{
         display: flex;

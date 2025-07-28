@@ -10,6 +10,8 @@ import {
     isInvalidKeyForInput
 } from './logic.js';
 
+const darkBtn = document.querySelector('.dark');
+const lightBtn = document.querySelector('.light');
 const form = document.querySelector('form');
 const calculatorCard = document.querySelector('.tip-calculator-card');
 const inputBill = document.getElementById('bill');
@@ -33,6 +35,14 @@ const peopleErrorMessage = document.getElementById('people-error-message');
 const customErrorMessage = document.getElementById('custom-error-message');
 
 const inputs = [inputBill, inputPeople, inputCustom];
+
+darkBtn.addEventListener("click", () =>{
+    document.body.classList.add('dark-theme')
+})
+
+lightBtn.addEventListener("click", () =>{
+    document.body.classList.remove('dark-theme')    
+})
 
 function getErrorMessageElement(input){
     switch(input){
