@@ -5,9 +5,9 @@ import {
     calculateTipAmount,
     calculateTotal,
     limitNumbersToInteger,
-    showTemporalOutline,
-    showTemporalMessage,
-    toggleClassErrorMessage
+    showInputError,
+    hideInputError,
+    isInvalidKeyForInput
 } from './logic.js';
 
 const form = document.querySelector('form');
@@ -28,30 +28,49 @@ const inputCustom = document.getElementById('custom');
 const tipButton = document.querySelector('.tip-buttons');
 const allButtons = document.querySelectorAll('.tipButton');
 
-const errorMessage = document.getElementById('error-message');
-let timeoutID;
-console.log(timeoutID)
+const billErrorMessage = document.getElementById('bill-error-message');
+const peopleErrorMessage = document.getElementById('people-error-message');
+const customErrorMessage = document.getElementById('custom-error-message');
 
 const inputs = [inputBill, inputPeople, inputCustom];
 
+function getErrorMessageElement(input){
+    switch(input){
+        case inputBill:
+            return billErrorMessage;
+        case inputPeople:
+            return peopleErrorMessage;
+        case inputCustom:
+            return customErrorMessage;
+        default:
+            return null;
+    }
+}
+
+function getShowErrorClass(input){
+    if(input === inputCustom) return 'show-error-message-down';
+    return 'show-error-message-up';
+}
+
 inputs.forEach(input => {
     input.addEventListener('keydown', (e)=>{
-        if(e.key === '-' || e.key === 'e' || e.key === '+' || e.key === ','){
-            showTemporalOutline(timeoutID, input, 'invalid-char-input');
-            showTemporalMessage(errorMessage, 'show-error-message', 'hide-error-message')
+        // isInvalidKeyForInput devuelve true or false en función del input
+        if(isInvalidKeyForInput(input, e.key)){
+            showInputError(input, getErrorMessageElement(input), 'invalid-char-input', getShowErrorClass(input), 'hide-error-message');
             e.preventDefault();
         } else {
-            toggleClassErrorMessage(errorMessage, input, 'show-error-message', 'hide-error-message', 'invalid-char-input')
+            hideInputError(input, getErrorMessageElement(input), 'invalid-char-input', getShowErrorClass(input), 'hide-error-message')
         }
-
-        if(input === inputPeople || input === inputCustom){
-            if(e.key === '.'){
-                showTemporalOutline(input);
-                e.preventDefault();
-            }
-        }
-    })         
+    })
 })
+
+form.addEventListener("click", (e) =>{
+        inputs.forEach(input => {
+            if(input !== e.target){
+                hideInputError(input, getErrorMessageElement(input), 'invalid-char-input', getShowErrorClass(), 'hide-error-message');
+            }
+        })
+    })
 
 function handleInput(e, setValueCallback, limitFunc, maxDigits){
     let value = parseFloat(e.target.value);

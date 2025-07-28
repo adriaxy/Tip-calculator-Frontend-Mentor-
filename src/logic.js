@@ -1,40 +1,59 @@
+let timeoutRefs = new WeakMap();
 
+export function isInvalidKeyForInput(input, key, ){
+    if(input.id === 'bill'){
+        return ['-', 'e', '+', ','].includes(key);
+    } else if (input.id === 'people' || input.id === 'custom') {
+        return ['-', 'e', '+', ',', '.'].includes(key);
+    }
+}
 
-export function showTemporalOutline(timeoutID, input, showClass){
+export function showInputError(input, div, showOutlineClass, showClassMessage, hideClassMessage){
+    const timeoutID = timeoutRefs.get(input);
+    div.classList.remove(hideClassMessage);
+    div.classList.add(showClassMessage);
+
     if(timeoutID) {
         clearTimeout(timeoutID);
-        timeoutID = null;
+        timeoutRefs.set(input, null);
     }
 
-    input.classList.add(showClass);
+    input.classList.add(showOutlineClass);
 
-    timeoutID = setTimeout(() => {
-        console.log(timeoutID)
-        input.classList.remove(showClass)
-        timeoutID = null; 
+    const newTimeout = setTimeout(() => {
+        input.classList.remove(showOutlineClass)
+        div.classList.remove(showClassMessage);
+        div.classList.add(hideClassMessage);
+        timeoutRefs.set(input, null);
     }, 2000);
 
-
-    setTimeout(() => {
-        input.classList.remove(showClass);
-    }, 2000)
+    timeoutRefs.set(input, newTimeout);
 }
 
-export function showTemporalMessage(div, showClass, hideClass){
-    div.classList.remove(hideClass);
-    div.classList.add(showClass);
 
-    setTimeout(() => {
-        div.classList.remove(showClass);
-        div.classList.add(hideClass);
-    }, 2000)
+export function hideInputError(input, div, showOutlineClass, showClassMessage, hideClassMessage){
+    const timeoutID = timeoutRefs.get(input);
+    if(timeoutID){
+        clearTimeout(timeoutID);
+        timeoutRefs.set(input, null);
+    }
+    
+    div.classList.remove(showClassMessage);
+    div.classList.add(hideClassMessage);
+
+    input.classList.remove(showOutlineClass);
+
 }
 
-export function toggleClassErrorMessage(div, input, showClass, hideClass, hideOutline){
-    div.classList.remove(showClass);
-    div.classList.add(hideClass);
-    input.classList.remove(hideOutline);
-}
+// export function showTemporalMessage(div, showClass, hideClass){
+//     div.classList.remove(hideClass);
+//     div.classList.add(showClass);
+
+//     setTimeout(() => {
+//         div.classList.remove(showClass);
+//         div.classList.add(hideClass);
+//     }, 2000)
+// }
 
 export function limitNumbers(limit, number){
     return parseFloat(number.toString().slice(0,limit))
