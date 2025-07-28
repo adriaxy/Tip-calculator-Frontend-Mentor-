@@ -8,6 +8,7 @@
     --Grey-200: hsl(185, 41%, 84%);
     --Grey-50:  hsl(189, 26%, 95%);
     --White:    hsl(0, 100%, 100%);
+    --Red:      hsl(0, 90%, 56%);
 
     /* font size */
     --fs-sm: 0.8rem;
@@ -182,6 +183,10 @@
     input::placeholder{
         text-align: right;
     }
+
+    input.invalid-char-input:focus{
+        outline: 2px solid var(--Red);
+    }
 }
 
 @layer layout{
@@ -251,6 +256,12 @@
         align-items: center;
     }
 
+    .input-name{
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+    }
+
     h1{
         display: flex;
         justify-content: center;
@@ -295,6 +306,25 @@
         position: absolute;
         top: 30%;
         left: 4%;
+    }
+
+    /* error messages */
+    .hide-error-message{
+        opacity: 0;
+        height: 0;
+        overflow: hidden;
+        font-size: var(--fs-sm);
+        color: var(--Red);
+        margin-bottom: 4px;
+    }
+
+    .show-error-message{
+        opacity: 1;
+        height: 100%;
+        overflow: hidden;
+        font-size: var(--fs-sm);
+        color: var(--Red);
+        margin-bottom: 4px;
     }
 
     @media(max-width: 860px){

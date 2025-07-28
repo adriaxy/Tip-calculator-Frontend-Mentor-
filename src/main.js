@@ -5,6 +5,9 @@ import {
     calculateTipAmount,
     calculateTotal,
     limitNumbersToInteger,
+    showTemporalOutline,
+    showTemporalMessage,
+    toggleClassErrorMessage
 } from './logic.js';
 
 const form = document.querySelector('form');
@@ -22,20 +25,28 @@ let inputBillValue = null;
 let inputPeopleValue = null;
 
 const inputCustom = document.getElementById('custom');
-const tipButton = document.querySelector('.tip-buttons')
-const allButtons = document.querySelectorAll('.tipButton')
+const tipButton = document.querySelector('.tip-buttons');
+const allButtons = document.querySelectorAll('.tipButton');
+
+const errorMessage = document.getElementById('error-message');
+let timeoutID;
+console.log(timeoutID)
 
 const inputs = [inputBill, inputPeople, inputCustom];
 
 inputs.forEach(input => {
     input.addEventListener('keydown', (e)=>{
         if(e.key === '-' || e.key === 'e' || e.key === '+' || e.key === ','){
+            showTemporalOutline(timeoutID, input, 'invalid-char-input');
+            showTemporalMessage(errorMessage, 'show-error-message', 'hide-error-message')
             e.preventDefault();
+        } else {
+            toggleClassErrorMessage(errorMessage, input, 'show-error-message', 'hide-error-message', 'invalid-char-input')
         }
 
         if(input === inputPeople || input === inputCustom){
             if(e.key === '.'){
-                console.log('clic en .')
+                showTemporalOutline(input);
                 e.preventDefault();
             }
         }
@@ -126,7 +137,7 @@ function inputValidator(){
         tipTotal.textContent = calculateTotal(inputBillValue, inputTipValue, inputPeopleValue)
     } else {
         resetTipDisplay();
-        //  console.log(`valor de tip: ${typeof inputTipValue}`);
+        //   console.log(`valor de tip: ${typeof inputTipValue}`);
         //  console.log(`valor de bill: ${typeof inputBillValue}`);
         //  console.log(`valor de People: ${typeof inputPeopleValue}`);
     }
