@@ -1,6 +1,6 @@
 let timeoutRefs = new WeakMap();
 
-export function isInvalidKeyForInput(input, key, ){
+export function isInvalidKeyForInput(input, key){
     if(input.id === 'bill'){
         return ['-', 'e', '+', ','].includes(key);
     } else if (input.id === 'people' || input.id === 'custom') {

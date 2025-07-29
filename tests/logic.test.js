@@ -3,7 +3,8 @@ import {
     limitNumbers,
     validatorValue,
     calculateTipAmount,
-    calculateTotal
+    calculateTotal,
+    isInvalidKeyForInput
 } from '../src/logic.js';
 
 describe('limitNumbers', () => {
@@ -65,5 +66,32 @@ describe('validatorValue', () => {
 
     test('returns null if value is undefined', () => {
         expect(validatorValue()).toBe(null)
+    })
+})
+
+describe ('isInvalidKeyForInput', ()=> {
+    test('returns true if input is bill and key includes "+"', ()=>{
+    const input = { id: 'bill' }
+        expect(isInvalidKeyForInput(input, '+')).toBe(true);
+    })
+
+    test('returns false if input is bill and key include "."', ()=>{
+    const input = { id: 'bill' }
+        expect(isInvalidKeyForInput(input, '.')).toBe(false);
+    })
+
+    test('returns true if input is custom and key includes "."', ()=>{
+    const input = { id: 'custom' }
+        expect(isInvalidKeyForInput(input, '.')).toBe(true);
+    })
+
+    test('returns false if input is custom and key is number', ()=>{
+    const input = { id: 'custom' }
+        expect(isInvalidKeyForInput(input, '9')).toBe(false);
+    })
+
+    test('returns undefined if input is not bill/custom/people', ()=>{
+    const input = { id: 'car' }
+        expect(isInvalidKeyForInput(input, '.')).toBe(undefined);
     })
 })
