@@ -299,6 +299,7 @@
     
     .light-solid-icon{
         color: var(--Mustard-Soft);
+        display: block;
     }
 
     .dark-theme .light-solid-icon{
@@ -307,6 +308,7 @@
 
     .dark-solid-icon{
         color: var(--Moon-Soft);
+        display: block;
     }
 
     .toggle-bg {
