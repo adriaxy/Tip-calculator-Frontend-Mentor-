@@ -36,6 +36,33 @@ const customErrorMessage = document.getElementById('custom-error-message');
 
 const inputs = [inputBill, inputPeople, inputCustom];
 
+const toggleButtons = document.querySelectorAll('.toggle-btn');
+const toggleBg = document.querySelector('.toggle-bg');
+const container = document.querySelector('.color-mode-container');
+
+toggleButtons.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    const btnRect = btn.getBoundingClientRect();
+    const containerRect = container.getBoundingClientRect();
+    const padding = 3;
+
+    const offsetLeft = btnRect.left - containerRect.left - padding;
+    const offsetTop = btnRect.top - containerRect.top - padding;
+
+    // Posiciona y dimensiona el fondo
+    toggleBg.style.transform = `translate(${offsetLeft}px, ${offsetTop}px)`;
+    toggleBg.style.width = `${btnRect.width}px`;
+    toggleBg.style.height = `${btnRect.height}px`;
+
+    // Modo claro / oscuro
+    if (btn.classList.contains('dark')) {
+      document.body.classList.add('dark-theme');
+    } else {
+      document.body.classList.remove('dark-theme');
+    }
+  });
+});
+
 darkBtn.addEventListener("click", () =>{
     document.body.classList.add('dark-theme')
 })

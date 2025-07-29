@@ -9,6 +9,11 @@
     --Grey-50:  hsl(189, 26%, 95%);
     --White:    hsl(0, 100%, 100%);
     --Red:      hsl(0, 90%, 56%);
+    --Mustard: hsl(42, 100%, 55%);
+    --Mustard-Soft: hsl(42, 85%, 50%);
+    --Moon: hsl(190, 30%, 12%);
+    --Moon-Soft: hsl(190, 30%, 18%);
+    --Moon-Light: hsl(190, 20%, 90%);
 
     /* font size */
     --fs-sm: 0.8rem;
@@ -34,8 +39,20 @@
 }
 
 .dark-theme {
-    --Green-400: hsl(312, 100%, 51%);
-    --Green-900: hsl(188, 40%, 4%);
+--Green-400: hsl(183, 73%, 19%);
+--Green-900: hsl(183, 46%, 62%);
+--Grey-500: hsl(185, 22%, 20%);
+--Grey-400: hsl(184, 62%, 42%);
+--Grey-200: hsl(185, 42%, 24%);
+--Grey-50:  hsl(192, 27%, 26%);
+--White:    hsl(182, 96%, 10%);
+--Red:      hsl(0, 62%, 77%);
+--Mustard: hsl(42, 100%, 45%);
+--Mustard-Soft: hsl(42, 70%, 44%); 
+--Moon: hsl(190, 30%, 88%);
+--Moon-Soft: hsl(190, 30%, 82%);
+--Moon-Light: hsl(190, 20%, 10%);
+--Moon-x: hsl(191, 21%, 31%);
 }
 
 @layer reset{
@@ -87,11 +104,16 @@
         font-weight: var(--fw-200);
     }
 
+
     body{
         background-color: var(--Grey-200);
         font-size: var(--fs-reg);
         font-weight: var(--fw-200);
         color: var(--Green-900);
+    }
+
+    body{
+        transition: background-color 0.1s ease
     }
 
     .tip-calculator-card{
@@ -136,13 +158,20 @@
         font-size: var(--fs-sm);
     }
 
-    button{
+    .dark-theme h3>span{
+        color: var(--White);
+    }
+
+    main button{
         color: var(--Grey-900);
-        background-color: var(--Grey-500);
         font-weight: var(--fw-600);
         text-align: center;
         height: 3rem;
         transition: background-color 0.1s ease, color 0.1s ease;
+    }
+
+    .btn-reset{
+        background-color: var(--Grey-500);
     }
 
     .calculator-input button{
@@ -157,11 +186,19 @@
         outline: none;
     }
 
+    input::placeholder{
+        color: var(--Grey-400);
+    }
+
     button:focus-visible{
         outline: 3px solid var(--Green-400);
     }
 
-    button:hover{
+    .dark-theme button:focus-visible{
+        outline: 3px solid var(--Mustard-Soft);
+    }
+
+    main button:hover{
         background-color: var(--Green-400);
         color: var(--Green-900);
     }
@@ -169,6 +206,10 @@
     input:focus{
     outline: none;
     box-shadow: 0 0 0 2px var(--Green-400);
+    }
+
+    .dark-theme input:focus{
+        box-shadow: 0 0 0 2px var(--Green-900);
     }
 
     input:focus::placeholder{
@@ -184,12 +225,20 @@
         background-color: var(--Grey-50);
     }
 
+    .dark-theme input{
+        caret-color: var(--Grey-900);
+    }
+
     input::placeholder{
         text-align: right;
     }
 
     input.invalid-char-input:focus{
         outline: 2px solid var(--Red);
+    }
+
+    a{
+        color: var(--Grey-900);
     }
 }
 
@@ -206,38 +255,87 @@
         height: 100vh;
     }
 
-    .mode-color{
+    .mode-color-section{
         margin-top: 20px;
         font-size: var(--fs-med);
-    }
+        display: flex;
+        justify-content: right;
+        }
 
-    .mode-color-buttons{
+    .color-mode-container{
+        position: relative;
         display: flex;
         flex-direction: row;
-        justify-content: end;
+        border-radius: 999px;
+        padding: 3px;
         gap: 10px;
-    }
-
-    button.light, button.dark {
-        align-items: center;
-        justify-content: center;
-        width: 30px;  /* o el tamaño que quieras */
-        height: 30px;
-        padding: 2px; /* opcional */
-        background-color: var(--White);
-    }
-
-    .mode-color-buttons button:hover{
         background-color: var(--Green-400);
     }
 
+    .toggle-btn {
+        display: flex;
+        align-items: center;
+        flex:1;
+        z-index: 1;
+        align-items: center;
+        justify-content: space-between;
+        background: none;
+        border: none;
+        transition: color 0.3 ease;
+        padding: 3px;
+        border-radius: 999px;
+        width: 18px;
+        height: 18px;
+    }
+
+    .light {
+        position: relative;
+        z-index: 10;
+    }
+
+    .dark{
+        z-index: 10;
+    }
+    
+    .light-solid-icon{
+        color: var(--Mustard-Soft);
+    }
+
+    .dark-theme .light-solid-icon{
+        color: var(--White);
+    }
+
+    .dark-solid-icon{
+        color: var(--Moon-Soft);
+    }
+
+    .toggle-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: var(--White);
+        z-index: -1;
+        transition: transform 0.3s ease-in-out, width 0.3s ease-in-out;
+        pointer-events: none;
+    }
+
+    .dark-theme .color-mode-container{
+        background-color: var(--Green-900);
+    }
+
+    .dark-theme .toggle-bg{
+        background-color: var(--White);
+    }
 
     main{
         display: flex;
         flex-direction: column;
         gap: 60px;
         flex-grow: 5;
-        margin-top: 8rem;
+        margin-top: 6rem;
     }
 
     .tip-calculator-card{
@@ -430,7 +528,8 @@
         }
         
         main{
-            margin-top: 4rem;
+            margin-top: 2rem;
+            gap: 40px;
         }
 
         .calculator-input{
@@ -449,6 +548,17 @@
 
          .output-block{
             gap: 5px;
+         }
+
+         .mode-color-section{
+            justify-content: right;
+            padding-right: 20px;
+         }
+
+         .attribution{
+            margin-top: 20px;
+            padding: 0 20px 20px;
+            text-align: center;
          }
     }
 
