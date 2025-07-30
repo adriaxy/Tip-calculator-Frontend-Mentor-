@@ -13,7 +13,7 @@ This is a solution to the [Frontend Mentor Tip Calculator App challenge](https:/
 
 ## 🌙 Dark Mode
 
-Click the theme toggle button in the header to switch between light and dark mode. Your preference is saved in `localStorage`.
+Click the theme toggle button in the header to switch between light and dark mode.
 
 ## 🛠️ Built With
 
