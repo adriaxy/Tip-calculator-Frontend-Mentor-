@@ -42,7 +42,7 @@
 --Green-400: hsl(183, 73%, 19%);
 --Green-900: hsl(183, 46%, 62%);
 --Grey-500: hsl(185, 22%, 20%);
---Grey-400: hsl(184, 62%, 42%);
+--Grey-400: hsl(184, 53%, 79%);
 --Grey-200: hsl(185, 42%, 24%);
 --Grey-50:  hsl(192, 27%, 26%);
 --White:    hsl(182, 96%, 10%);
@@ -101,18 +101,15 @@
     h1,
     h2,
     h3{
-        font-weight: var(--fw-200);
+        font-weight: var(--fw-400);
     }
 
 
     body{
         background-color: var(--Grey-200);
         font-size: var(--fs-reg);
-        font-weight: var(--fw-200);
+        font-weight: var(--fw-400);
         color: var(--Green-900);
-    }
-
-    body{
         transition: background-color 0.1s ease
     }
 
@@ -275,9 +272,7 @@
     .toggle-btn {
         display: flex;
         align-items: center;
-        flex:1;
         z-index: 1;
-        align-items: center;
         justify-content: space-between;
         background: none;
         border: none;
