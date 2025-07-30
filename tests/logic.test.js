@@ -95,3 +95,4 @@ describe ('isInvalidKeyForInput', ()=> {
         expect(isInvalidKeyForInput(input, '.')).toBe(undefined);
     })
 })
+
